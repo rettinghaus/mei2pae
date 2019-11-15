@@ -5,7 +5,7 @@
 	mei2pae.xsl - XSLT (1.0) stylesheet for creating incipits in Plaine & Easie Code from MEI
 
   Klaus Rettinghaus <rettinghaus@bach-leipzig.de>
-  University Leipzig
+  Leipzig University
 
 	For info on MEI, see http://music-encoding.org
 	For info on Plaine & Easie Code, see https://www.iaml.info/plaine-easie-code
@@ -336,13 +336,25 @@
 
   <xsl:template name="setDuration">
     <xsl:param name="durval" select="@dur" />
-    <!-- data.DURATION -->
+    <!-- data.DURATION.cmn -->
     <xsl:choose>
       <xsl:when test="@dur = 'long'">
         <xsl:text>0</xsl:text>
       </xsl:when>
       <xsl:when test="@dur = 'breve'">
         <xsl:text>9</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = '1'">
+        <xsl:text>1</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = '2'">
+        <xsl:text>2</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = '4'">
+        <xsl:text>4</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = '8'">
+        <xsl:text>8</xsl:text>
       </xsl:when>
       <xsl:when test="@dur = '16'">
         <xsl:text>6</xsl:text>
@@ -351,10 +363,13 @@
         <xsl:text>3</xsl:text>
       </xsl:when>
       <xsl:when test="@dur = '64'">
-        <xsl:text>6</xsl:text>
+        <xsl:text>5</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = '128'">
+        <xsl:text>7</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="@dur" />
+        <xsl:message select="'Shorter durations than 128th are not supported.'" />
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
