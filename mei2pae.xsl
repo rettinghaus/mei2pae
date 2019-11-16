@@ -12,7 +12,7 @@
 
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns="http://www.loc.gov/MARC21/slim" xmlns:mei="http://www.music-encoding.org/ns/mei" exclude-result-prefixes="mei">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:mei="http://www.music-encoding.org/ns/mei" exclude-result-prefixes="mei">
   <xsl:output method="text" encoding="UTF-8" indent="no" media-type="text/txt" />
   <xsl:strip-space elements="*" />
 
