@@ -63,7 +63,6 @@
   <!-- MEI chord -->
   <xsl:template match="mei:chord">
     <xsl:call-template name="setDuration" />
-    <xsl:call-template name="setDots" />
     <xsl:for-each select="mei:note">
       <xsl:call-template name="setOctave" />
       <xsl:call-template name="setAccidental" />
@@ -183,7 +182,6 @@
     <xsl:variable name="noteKey" select="concat('#',./@xml:id)" />
     <xsl:call-template name="setOctave" />
     <xsl:call-template name="setDuration" />
-    <xsl:call-template name="setDots" />
     <xsl:if test="@grace">
       <xsl:text>q</xsl:text>
     </xsl:if>
@@ -201,7 +199,6 @@
   <!-- MEI rest -->
   <xsl:template match="mei:rest">
     <xsl:call-template name="setDuration" />
-    <xsl:call-template name="setDots" />
     <xsl:text>-</xsl:text>
   </xsl:template>
 
@@ -323,17 +320,6 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="setDots">
-    <xsl:param name="dots" select="@dots" />
-    <xsl:if test="$dots &gt; 0">
-      <xsl:text>.</xsl:text>
-      <xsl:call-template name="setDots">
-        <xsl:with-param name="dots" select="$dots - 1" />
-      </xsl:call-template>
-    </xsl:if>
-    <xsl:apply-templates select="mei:dot" />
-  </xsl:template>
-
   <xsl:template name="setDuration">
     <xsl:param name="durval" select="@dur" />
     <!-- data.DURATION.cmn -->
@@ -372,6 +358,18 @@
         <xsl:message select="'Shorter durations than 128th are not supported.'" />
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:call-template name="setDots" />
+  </xsl:template>
+
+  <xsl:template name="setDots">
+    <xsl:param name="dots" select="@dots" />
+    <xsl:if test="$dots &gt; 0">
+      <xsl:text>.</xsl:text>
+      <xsl:call-template name="setDots">
+        <xsl:with-param name="dots" select="$dots - 1" />
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:apply-templates select="mei:dot" />
   </xsl:template>
 
   <xsl:template name="setOctave">
