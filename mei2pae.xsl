@@ -44,21 +44,21 @@
   </xsl:template>
 
   <!-- MEI beam -->
-  <xsl:template match="mei:beam">
+  <xsl:template match="mei:beam" mode="plaineAndEasie">
     <xsl:value-of select="'{'" />
-    <xsl:apply-templates />
+    <xsl:apply-templates mode="plaineAndEasie" />
     <xsl:value-of select="'}'" />
   </xsl:template>
 
   <!-- MEI clef -->
-  <xsl:template name="setClef" match="mei:clef|@*[starts-with(name(),'clef')]">
+  <xsl:template name="setClef" match="mei:clef|@*[starts-with(name(),'clef')]" mode="plaineAndEasie">
     <xsl:param name="clefShape" select="(//@shape|ancestor-or-self::*/@clef.shape)[1]" />
     <xsl:param name="clefLine" select="(//@line|ancestor-or-self::*/@clef.line)[1]" />
     <xsl:value-of select="concat('%', $clefShape, '-', $clefLine)" />
   </xsl:template>
 
   <!-- MEI chord -->
-  <xsl:template match="mei:chord">
+  <xsl:template match="mei:chord" mode="plaineAndEasie">
     <xsl:call-template name="setDuration" />
     <xsl:for-each select="mei:note">
       <xsl:call-template name="setOctave" />
@@ -71,7 +71,7 @@
   </xsl:template>
 
   <!-- MEI key signature -->
-  <xsl:template name="setKey" match="mei:keySig|@*[starts-with(name(),'key')]">
+  <xsl:template name="setKey" match="mei:keySig|@*[starts-with(name(),'key')]" mode="plaineAndEasie">
     <xsl:param name="keyTonic" select="(@pname|ancestor-or-self::*/@key.pname)[1]" />
     <xsl:param name="keyAccid" select="(@accid|ancestor-or-self::*/@key.accid)[1]" />
     <xsl:param name="keyMode" select="(@mode|ancestor-or-self::*/@key.mode)[1]" />
@@ -128,15 +128,15 @@
   </xsl:template>
 
   <!-- MEI layer -->
-  <xsl:template match="mei:layer[not(@n)][1]">
-    <xsl:apply-templates />
+  <xsl:template match="mei:layer[not(@n)][1]" mode="plaineAndEasie">
+    <xsl:apply-templates mode="plaineAndEasie" />
   </xsl:template>
-  <xsl:template match="mei:layer[@n = $layer]">
-    <xsl:apply-templates />
+  <xsl:template match="mei:layer[@n = $layer]" mode="plaineAndEasie">
+    <xsl:apply-templates mode="plaineAndEasie" />
   </xsl:template>
 
   <!-- MEI measure rest -->
-  <xsl:template match="mei:mRest">
+  <xsl:template match="mei:mRest" mode="plaineAndEasie">
     <xsl:text>=</xsl:text>
   </xsl:template>
 
@@ -170,12 +170,12 @@
   </xsl:template>
 
   <!-- MEI multi measure rest -->
-  <xsl:template match="mei:multiRest">
+  <xsl:template match="mei:multiRest" mode="plaineAndEasie">
     <xsl:value-of select="concat('=', @num)" />
   </xsl:template>
 
   <!-- MEI note -->
-  <xsl:template match="mei:note">
+  <xsl:template match="mei:note" mode="plaineAndEasie">
     <xsl:variable name="noteKey" select="concat('#',./@xml:id)" />
     <xsl:call-template name="setOctave" />
     <xsl:call-template name="setDuration" />
@@ -190,13 +190,18 @@
     <xsl:if test="@tie='i' or @tie='m'">
       <xsl:call-template name="addTie" />
     </xsl:if>
-    <xsl:apply-templates select="ancestor::mei:measure/*[@startid = $noteKey]" />
+    <xsl:apply-templates select="ancestor::mei:measure/*[@startid = $noteKey]" mode="plaineAndEasie" />
   </xsl:template>
 
   <!-- MEI rest -->
-  <xsl:template match="mei:rest">
+  <xsl:template match="mei:rest" mode="plaineAndEasie">
     <xsl:call-template name="setDuration" />
     <xsl:text>-</xsl:text>
+  </xsl:template>
+
+  <!-- MEI score -->
+  <xsl:template match="mei:score[1]">
+    <xsl:apply-templates select="//mei:staffDef[@n = $staff]|/descendant::mei:measure[position() &lt;= $measures]" mode="music" />
   </xsl:template>
 
   <!-- MEI section -->
@@ -205,13 +210,8 @@
   </xsl:template>
 
   <!-- MEI staff -->
-  <xsl:template match="mei:staff">
-    <xsl:apply-templates />
-  </xsl:template>
-
-  <!-- MEI score -->
-  <xsl:template match="mei:score">
-    <xsl:apply-templates select="//mei:staffDef[@n = $staff]|/descendant::mei:measure[position() &lt;= $measures]" mode="music" />
+  <xsl:template match="mei:staff" mode="music">
+    <xsl:apply-templates mode="plaineAndEasie" />
   </xsl:template>
 
   <!-- MEI staff definition -->
@@ -246,23 +246,26 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- MEI tempo -->
+  <xsl:template match="mei:tempo" mode="plaineAndEasie" />
+
   <!-- MEI tie -->
-  <xsl:template match="mei:tie" name="addTie">
+  <xsl:template match="mei:tie" name="addTie" mode="plaineAndEasie">
     <xsl:text>+</xsl:text>
   </xsl:template>
 
   <!-- MEI trill -->
-  <xsl:template match="mei:trill" name="addTrill">
+  <xsl:template match="mei:trill" name="addTrill" mode="plaineAndEasie">
     <xsl:text>t</xsl:text>
   </xsl:template>
 
   <!-- MEI tuplet -->
-  <xsl:template match="mei:tuplet">
+  <xsl:template match="mei:tuplet" mode="plaineAndEasie">
     <xsl:if test="@num != '3'">
       <xsl:message select="'Only triplets are supported!'" />
     </xsl:if>
     <xsl:text>(</xsl:text>
-    <xsl:apply-templates />
+    <xsl:apply-templates mode="plaineAndEasie" />
     <xsl:text>)</xsl:text>
   </xsl:template>
 
