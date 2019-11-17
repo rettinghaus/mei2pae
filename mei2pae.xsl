@@ -30,13 +30,10 @@
   </xsl:variable>
 
   <!-- Main ouput templates -->
-  <xsl:template match="/">
-    <!-- select only the first score in the file -->
-    <xsl:apply-templates select="descendant::mei:score[1]" />
-  </xsl:template>
+  <xsl:template match="mei:meiHead" />
 
   <xsl:template match="mei:measure" mode="music">
-    <xsl:apply-templates select="mei:staff[@n = $staff]|mei:staffDef" />
+    <xsl:apply-templates select="mei:staff[@n = $staff]|mei:staffDef" mode="music" />
     <xsl:call-template name="setBarline" />
   </xsl:template>
 
@@ -236,7 +233,7 @@
         <xsl:with-param name="meterRend" select="ancestor-or-self::*/@meter.form[1]" />
       </xsl:call-template>
     </xsl:if>
-    <xsl:if test="position()=1">
+    <xsl:if test="position()=1 and parent::*[1]=local-name(score)">
       <xsl:value-of select="' '" />
     </xsl:if>
   </xsl:template>
