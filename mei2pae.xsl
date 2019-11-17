@@ -39,7 +39,7 @@
 
   <xsl:template match="mei:measure" mode="lyrics">
     <xsl:if test="position() &lt;= $measures">
-      <xsl:apply-templates select="mei:staff[@n = $staff]/mei:layer[1]//mei:syl" />
+      <xsl:apply-templates select="mei:staff[@n = $staff]/mei:layer[1]//mei:syl" mode="plainText" />
     </xsl:if>
   </xsl:template>
 
@@ -239,10 +239,10 @@
   </xsl:template>
 
   <!-- MEI syllable -->
-  <xsl:template match="mei:syl">
-    <xsl:apply-templates />
-    <xsl:if test="@wordpos='t' or @con!='d'">
-      <xsl:text></xsl:text>
+  <xsl:template match="mei:syl" mode="plainText">
+    <xsl:value-of select="text()" />
+    <xsl:if test="not(@wordpos!='t' or @con='d')">
+      <xsl:value-of select="' '" />
     </xsl:if>
   </xsl:template>
 
