@@ -1,0 +1,21 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "MEI2PAE",
+  "name": "MEI2PAE",
+  "description": "XSLT to extract short incipits from MEI files",
+  "softwareVersion": "1.0.0-beta",
+  "license": "OSI Approved :: MIT License",
+  "programmingLanguage": "XSLT",
+  "maintainer": "https://orcid.org/0000-0003-1898-2543",
+  "datePublished": "2019-11-18",
+  "codeRepository": "https://github.com/rettinghaus/mei2pae",
+  "author": [{
+    "@id": "https://orcid.org/0000-0003-1898-2543",
+    "@type": "Person",
+    "givenName": "Klaus",
+    "familyName": "Rettinghaus",
+    "name": "Rettinghaus, Klaus",
+    "email": "rettinghaus@bach-leipzig.de"
+  }]
+}
