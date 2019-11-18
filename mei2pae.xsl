@@ -144,11 +144,12 @@
   </xsl:template>
 
   <!-- MEI meter signature -->
-  <xsl:template name="meterSig" match="mei:meterSig">
+  <xsl:template name="meterSig" match="mei:meterSig" mode="plaineAndEasie">
     <xsl:param name="meterSymbol" select="@sym" />
     <xsl:param name="meterCount" select="@count" />
     <xsl:param name="meterUnit" select="@unit" />
     <xsl:param name="meterRend" select="@form" />
+    <xsl:value-of select="'@'" />
     <xsl:choose>
       <xsl:when test="$meterRend = 'invis'"></xsl:when>
       <xsl:when test="$meterSymbol">
@@ -228,7 +229,6 @@
     </xsl:if>
     <!-- meter -->
     <xsl:if test="ancestor-or-self::*/@*[starts-with(name(),'meter')]">
-      <xsl:value-of select="'@'" />
       <xsl:call-template name="meterSig">
         <xsl:with-param name="meterSymbol" select="ancestor-or-self::*/@meter.sym[1]" />
         <xsl:with-param name="meterCount" select="ancestor-or-self::*/@meter.count[1]" />
