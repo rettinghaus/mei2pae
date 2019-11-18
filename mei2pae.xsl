@@ -50,6 +50,9 @@
     <xsl:value-of select="'}'" />
   </xsl:template>
 
+  <!-- MEI beam span -->
+  <xsl:template match="mei:beamSpan" mode="plaineAndEasie" />
+
   <!-- MEI clef -->
   <xsl:template name="setClef" match="mei:clef|@*[starts-with(name(),'clef')]" mode="plaineAndEasie">
     <xsl:param name="clefShape" select="(//@shape|ancestor-or-self::*/@clef.shape)[1]" />
@@ -268,6 +271,9 @@
     <xsl:apply-templates mode="plaineAndEasie" />
     <xsl:text>)</xsl:text>
   </xsl:template>
+
+  <!-- MEI tuplet span -->
+  <xsl:template match="mei:tupletSpan" mode="plaineAndEasie" />
 
   <!-- Helper templates -->
   <!-- set accidental -->
