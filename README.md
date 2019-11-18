@@ -10,6 +10,7 @@ It takes following parameters:
 * `measures` – adjusts the number of measures to be taken into account (default is 4)
 
 #### Known limitations
+* only for common music notation (*MEI CMN*)
 * measure rests are not combined
 * fermatas will be ignored
 * tuplets are treated as triplets
