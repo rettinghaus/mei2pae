@@ -265,7 +265,7 @@
   <!-- MEI tuplet -->
   <xsl:template match="mei:tuplet" mode="plaineAndEasie">
     <xsl:if test="@num != '3'">
-      <xsl:message select="'Only triplets are supported!'" />
+      <xsl:message>Only triplets are supported!</xsl:message>
     </xsl:if>
     <xsl:text>(</xsl:text>
     <xsl:apply-templates mode="plaineAndEasie" />
@@ -361,7 +361,7 @@
         <xsl:text>7</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:message select="'Shorter durations than 128th are not supported.'" />
+        <xsl:message>Shorter durations than 128th are not supported.</xsl:message>
       </xsl:otherwise>
     </xsl:choose>
     <xsl:call-template name="setDots" />
