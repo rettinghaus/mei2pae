@@ -43,6 +43,9 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- MEI annotation -->
+  <xsl:template match="mei:annot" mode="plaineAndEasie" />
+
   <!-- MEI beam -->
   <xsl:template match="mei:beam" mode="plaineAndEasie">
     <xsl:value-of select="'{'" />
@@ -274,6 +277,10 @@
 
   <!-- MEI tuplet span -->
   <xsl:template match="mei:tupletSpan" mode="plaineAndEasie" />
+
+  <!-- MEI unclear -->
+  <xsl:template match="mei:unclear" mode="plaineAndEasie" />
+
 
   <!-- Helper templates -->
   <!-- set accidental -->
