@@ -26,7 +26,7 @@
   <!-- Global variables -->
   <!-- version -->
   <xsl:variable name="version">
-    <xsl:text>1.0 BETA</xsl:text>
+    <xsl:text>1.0.0-rc.1</xsl:text>
   </xsl:variable>
 
   <!-- Main ouput templates -->

@@ -4,7 +4,7 @@
   "identifier": "MEI2PAE",
   "name": "MEI2PAE",
   "description": "XSLT to extract short incipits from MEI files",
-  "softwareVersion": "1.0.0-beta",
+  "softwareVersion": "1.0.0-rc.1",
   "license": "OSI Approved :: MIT License",
   "programmingLanguage": "XSLT",
   "maintainer": "https://orcid.org/0000-0003-1898-2543",
