@@ -223,6 +223,9 @@
 
   <!-- MEI staff definition -->
   <xsl:template match="mei:staffDef" mode="music">
+    <xsl:if test="@notationtype = 'neume'">
+      <xsl:message>WARNING: Neumes are not supported!</xsl:message>
+    </xsl:if>
     <xsl:variable name="accidental" select="ancestor-or-self::*/@key.sig" />
     <!-- clef -->
     <xsl:call-template name="setClef" />
