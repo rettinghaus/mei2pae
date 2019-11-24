@@ -57,10 +57,26 @@
   <xsl:template match="mei:beamSpan" mode="plaineAndEasie" />
 
   <!-- MEI clef -->
-  <xsl:template name="setClef" match="mei:clef|@*[starts-with(name(),'clef')]" mode="plaineAndEasie">
-    <xsl:param name="clefShape" select="(//@shape|ancestor-or-self::*/@clef.shape)[1]" />
+  <xsl:template name="setClef" match="mei:clef" mode="plaineAndEasie">
+    <xsl:param name="clefShape">
+      <xsl:choose>
+        <xsl:when test="((//@shape|ancestor-or-self::*/@clef.shape)[1] = 'G') and ((//@dis|ancestor-or-self::*/@clef.dis)[1] = '8')">
+          <xsl:value-of select="'g'" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="(//@shape|ancestor-or-self::*/@clef.shape)[1]" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:param>
     <xsl:param name="clefLine" select="(//@line|ancestor-or-self::*/@clef.line)[1]" />
-    <xsl:value-of select="concat('%', $clefShape, '-', $clefLine)" />
+    <xsl:choose>
+      <xsl:when test="contains(ancestor-or-self::*/@notationtype, 'mensural')">
+        <xsl:value-of select="concat('%', $clefShape, '+', $clefLine)" />
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat('%', $clefShape, '-', $clefLine)" />
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- MEI chord -->
