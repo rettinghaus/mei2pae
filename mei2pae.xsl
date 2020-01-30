@@ -354,8 +354,9 @@
 
   <xsl:template name="setDuration">
     <xsl:param name="durval" select="@dur" />
-    <!-- data.DURATION.cmn -->
+    <!-- data.DURATION -->
     <xsl:choose>
+      <!-- data.DURATION.cmn -->
       <xsl:when test="@dur = 'long'">
         <xsl:text>0</xsl:text>
       </xsl:when>
@@ -385,6 +386,29 @@
       </xsl:when>
       <xsl:when test="@dur = '128'">
         <xsl:text>7</xsl:text>
+      </xsl:when>
+      <!-- data.DURATION.mensural -->
+      <xsl:when test="@dur = 'maxima'"></xsl:when>
+      <xsl:when test="@dur = 'longa'">
+        <xsl:text>0</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = 'brevis'">
+        <xsl:text>9</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = 'semibrevis'">
+        <xsl:text>1</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = 'minima'">
+        <xsl:text>2</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = 'semiminima'">
+        <xsl:text>4</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = 'fusa'">
+        <xsl:text>8</xsl:text>
+      </xsl:when>
+      <xsl:when test="@dur = 'semifusa'">
+        <xsl:text>6</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:message>Shorter durations than 128th are not supported.</xsl:message>

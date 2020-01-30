@@ -3,7 +3,7 @@
 Little XSLT to extract short incipits from MEI files encoded with [Plaine and Easie Code](https://www.iaml.info/plaine-easie-code).
 
 ### Usage
-The template takes the first `<score>` element in the file as basis. 
+The stylesheet takes the first `<score>` element in the file as basis. 
 It takes following parameters: 
 * `staff` – selects the staff in the MEI file (default is 1)
 * `layer` – selects the layer in the MEI file (default is 1)
