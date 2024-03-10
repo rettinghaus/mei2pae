@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
 	mei2pae.xsl - XSLT (1.0) stylesheet for creating incipits in Plaine & Easie Code from MEI
 
-  Klaus Rettinghaus <rettinghaus@bach-leipzig.de>
-  Leipzig University
+  Klaus Rettinghaus <klaus.rettinghaus@enote.com>
+  Enote GmbH
 
 	For info on MEI, see http://music-encoding.org
 	For info on Plaine & Easie Code, see https://www.iaml.info/plaine-easie-code
@@ -26,7 +26,7 @@
   <!-- Global variables -->
   <!-- version -->
   <xsl:variable name="version">
-    <xsl:text>1.0.0-rc.1</xsl:text>
+    <xsl:text>1.1.0</xsl:text>
   </xsl:variable>
 
   <!-- Main ouput templates -->
@@ -97,51 +97,50 @@
     <xsl:param name="keyTonic" select="(@pname|ancestor-or-self::*/@key.pname)[1]" />
     <xsl:param name="keyAccid" select="(@accid|ancestor-or-self::*/@key.accid)[1]" />
     <xsl:param name="keyMode" select="(@mode|ancestor-or-self::*/@key.mode)[1]" />
-    <xsl:param name="keySig" select="(@sig|ancestor-or-self::*/@key.sig)[1]" />
-    <xsl:param name="keySigMixed" select="(@sig.mixed|ancestor-or-self::*/@key.sig.mixed)[1]" />
-    <xsl:if test="$keySig != 'mixed'">
+    <xsl:param name="keysig" select="(@sig|ancestor-or-self::*/@keysig)[1]" />
+    <xsl:if test="$keysig != 'mixed'">
       <xsl:value-of select="'$'" />
       <xsl:choose>
-        <xsl:when test="$keySig='1s'">
+        <xsl:when test="$keysig='1s'">
           <xsl:text>xF</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='2s'">
+        <xsl:when test="$keysig='2s'">
           <xsl:text>xFC</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='3s'">
+        <xsl:when test="$keysig='3s'">
           <xsl:text>xFCG</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='4s'">
+        <xsl:when test="$keysig='4s'">
           <xsl:text>xFCGD</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='5s'">
+        <xsl:when test="$keysig='5s'">
           <xsl:text>xFCGDA</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='6s'">
+        <xsl:when test="$keysig='6s'">
           <xsl:text>xFCGDAE</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='7s'">
+        <xsl:when test="$keysig='7s'">
           <xsl:text>xFCGDAEB</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='1f'">
+        <xsl:when test="$keysig='1f'">
           <xsl:text>bB</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='2f'">
+        <xsl:when test="$keysig='2f'">
           <xsl:text>bBE</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='3f'">
+        <xsl:when test="$keysig='3f'">
           <xsl:text>bBEA</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='4f'">
+        <xsl:when test="$keysig='4f'">
           <xsl:text>bBEAD</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='5f'">
+        <xsl:when test="$keysig='5f'">
           <xsl:text>bBEADG</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='6f'">
+        <xsl:when test="$keysig='6f'">
           <xsl:text>bBEADGC</xsl:text>
         </xsl:when>
-        <xsl:when test="$keySig='7f'">
+        <xsl:when test="$keysig='7f'">
           <xsl:text>bBEADGCF</xsl:text>
         </xsl:when>
         <xsl:otherwise></xsl:otherwise>
@@ -242,13 +241,18 @@
     <xsl:if test="@notationtype = 'neume'">
       <xsl:message>WARNING: Neumes are not supported!</xsl:message>
     </xsl:if>
-    <xsl:variable name="accidental" select="ancestor-or-self::*/@key.sig" />
+    <xsl:variable name="accidental" select="ancestor-or-self::*/@keysig" />
     <!-- clef -->
     <xsl:call-template name="setClef" />
     <!-- key -->
-    <xsl:if test="(substring($accidental, string-length($accidental), 1) = 'f') or (substring($accidental, string-length($accidental), 1) = 's')">
-      <xsl:call-template name="setKey" />
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="(substring($accidental, string-length($accidental), 1) = 'f') or (substring($accidental, string-length($accidental), 1) = 's')">
+        <xsl:call-template name="setKey" />
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="mei:keySig" mode="plaineAndEasie" />
+      </xsl:otherwise>
+    </xsl:choose>
     <!-- meter -->
     <xsl:if test="ancestor-or-self::*/@*[starts-with(name(),'meter')]">
       <xsl:call-template name="meterSig">
