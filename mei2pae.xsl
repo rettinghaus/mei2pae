@@ -92,6 +92,9 @@
     </xsl:for-each>
   </xsl:template>
 
+  <!-- MEI dynamic -->
+  <xsl:template match="mei:dynam" mode="plaineAndEasie" />
+
   <!-- MEI key signature -->
   <xsl:template name="setKey" match="mei:keySig|@*[starts-with(name(),'key')]" mode="plaineAndEasie">
     <xsl:param name="keyTonic" select="(@pname|ancestor-or-self::*/@key.pname)[1]" />
