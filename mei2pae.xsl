@@ -2,7 +2,7 @@
 
 <!--
 
-	mei2pae.xsl - XSLT (1.0) stylesheet for creating incipits in Plaine & Easie Code from MEI
+	mei2pae.xsl - XSLT (1.2) stylesheet for creating incipits in Plaine & Easie Code from MEI
 
   Klaus Rettinghaus <klaus.rettinghaus@enote.com>
   Enote GmbH
@@ -12,21 +12,21 @@
 
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:mei="http://www.music-encoding.org/ns/mei" exclude-result-prefixes="mei">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:mei="http://www.music-encoding.org/ns/mei" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="mei">
   <xsl:output method="text" encoding="UTF-8" indent="no" media-type="text/txt" />
   <xsl:strip-space elements="*" />
 
   <!-- Parameters -->
   <!-- These define the "leading voice" and the length of the incipit -->
   <!-- Default is the first voice with a length of 4 measures -->
-  <xsl:param name="staff">1</xsl:param>
-  <xsl:param name="layer">1</xsl:param>
-  <xsl:param name="measures">4</xsl:param>
+  <xsl:param name="staff" as="xs:integer">1</xsl:param>
+  <xsl:param name="layer" as="xs:integer">1</xsl:param>
+  <xsl:param name="measures" as="xs:integer">23</xsl:param>
 
   <!-- Global variables -->
   <!-- version -->
   <xsl:variable name="version">
-    <xsl:text>1.1.1</xsl:text>
+    <xsl:text>1.2.0</xsl:text>
   </xsl:variable>
 
   <!-- Main ouput templates -->
@@ -55,6 +55,9 @@
 
   <!-- MEI beam span -->
   <xsl:template match="mei:beamSpan" mode="plaineAndEasie" />
+
+  <!-- MEI caesura -->
+  <xsl:template match="mei:caesura" mode="plaineAndEasie" />
 
   <!-- MEI clef -->
   <xsl:template name="setClef" match="mei:clef" mode="plaineAndEasie">
@@ -94,6 +97,9 @@
 
   <!-- MEI dynamic -->
   <xsl:template match="mei:dynam" mode="plaineAndEasie" />
+
+  <!-- MEI fermata -->
+  <xsl:template match="mei:fermata" mode="plaineAndEasie" />
 
   <!-- MEI key signature -->
   <xsl:template name="setKey" match="mei:keySig|@*[starts-with(name(),'key')]" mode="plaineAndEasie">
@@ -265,7 +271,7 @@
         <xsl:with-param name="meterRend" select="ancestor-or-self::*/@meter.form[1]" />
       </xsl:call-template>
     </xsl:if>
-    <xsl:if test="position()=1 and parent::*[1]=local-name(score)">
+    <xsl:if test="position()=1">
       <xsl:value-of select="' '" />
     </xsl:if>
   </xsl:template>
