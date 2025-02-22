@@ -299,12 +299,23 @@
 
   <!-- MEI tuplet -->
   <xsl:template match="mei:tuplet" mode="plaineAndEasie">
-    <xsl:if test="@num != '3'">
-      <xsl:message>Only triplets are supported!</xsl:message>
-    </xsl:if>
-    <xsl:text>(</xsl:text>
-    <xsl:apply-templates mode="plaineAndEasie" />
-    <xsl:text>)</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@dur and @num">
+        <xsl:call-template name="setDuration" />
+        <xsl:text>(</xsl:text>
+        <xsl:apply-templates mode="plaineAndEasie" />
+        <xsl:value-of select="concat(';', @num)" />
+        <xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:if test="@num != '3'">
+          <xsl:message>Without @dur only triplets are supported!</xsl:message>
+        </xsl:if>
+        <xsl:text>(</xsl:text>
+        <xsl:apply-templates mode="plaineAndEasie" />
+        <xsl:text>)</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- MEI tuplet span -->
