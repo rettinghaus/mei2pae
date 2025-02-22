@@ -1,6 +1,6 @@
 # MEI2PAE
 
-Little XSLT to extract short incipits from MEI files encoded with [Plaine and Easie Code](https://www.iaml.info/plaine-easie-code).
+Little XSLT to extract short incipits from MEI files encoded with [Plaine & Easie Code](https://plaine-and-easie.info/).
 
 ## Usage
 
