@@ -2,7 +2,7 @@
 
 <!--
 
-	mei2pae.xsl - XSLT (1.0) stylesheet for creating incipits in Plaine & Easie Code from MEI
+	mei2pae.xsl - XSLT (1.1.1) stylesheet for creating incipits in Plaine & Easie Code from MEI
 
   Klaus Rettinghaus <klaus.rettinghaus@enote.com>
   Enote GmbH
