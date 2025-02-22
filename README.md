@@ -20,4 +20,4 @@ It takes following parameters:
 
 ## Example implementation
 
-The template aims to be used in other projects. For example you may try the `add-incipit.xsl`, that adds an incipit to the `<work>` element in MEI 3 and MEI 4 files.
+The template aims to be used in other projects. For example you may try the `add-incipit.xsl`, that adds an incipit to the `<work>` element in MEI 3/4/5 files.
