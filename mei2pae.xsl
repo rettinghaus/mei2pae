@@ -300,7 +300,7 @@
   <!-- MEI tuplet -->
   <xsl:template match="mei:tuplet" mode="plaineAndEasie">
     <xsl:choose>
-      <xsl:when test="@dur and @num">
+      <xsl:when test="count(tokenize(@dur)) = 1 and @num">
         <xsl:call-template name="setDuration" />
         <xsl:text>(</xsl:text>
         <xsl:apply-templates mode="plaineAndEasie" />
@@ -309,7 +309,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="@num != '3'">
-          <xsl:message>Without @dur only triplets are supported!</xsl:message>
+          <xsl:message>Without a non-additive @dur only triplets are supported!</xsl:message>
         </xsl:if>
         <xsl:text>(</xsl:text>
         <xsl:apply-templates mode="plaineAndEasie" />
